@@ -1,0 +1,26 @@
+library(tseries) #Required library for time series
+> data <- scan("F:/Mostakim/4th Year/Stat H-410; Statistical computing VI
+II; Survival Analysis and Time Series Analysis/TSData/unemp.txt") #Read
+ing the data set
+data <- ts(data, freq=12, start=c(1961,1)) #Convering the data into tim
+e series
+plot(data)
+
+adf.test(data)
+sdata <- diff(data) #Making the data stationary
+plot(sdata)
+adf.test(sdata)
+acf(sdata)
+
+pacf(sdata)
+ma1 <- arima(data, order=c(0,1,1))
+ma1
+tsdiag(ma1)
+#Checking Normality
+qqnorm(ma1$residuals); qqline(ma1$residuals)
+
+shapiro.test(ma1$residuals)
+## 
+## Shapiro-Wilk normality test
+
+predict(ma1, n.ahead=5)$pred
